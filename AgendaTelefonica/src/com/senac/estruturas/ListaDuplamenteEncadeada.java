@@ -23,6 +23,24 @@ public class ListaDuplamenteEncadeada<T> {
 			tail = nodo;
 	}
 	
+	public void insert(Nodo<T> nodo, Nodo<T> anterior) {
+		nodo.setNext(anterior.getNext());
+		anterior.setNext(nodo);
+		nodo.setPrev(anterior);
+		
+		if(anterior == tail)
+			tail = nodo;
+	}
+	
+	public void append(Nodo<T> nodo) {
+		if(tail != null) {
+			tail.setNext(nodo);
+			nodo.setPrev(tail);
+		} else 
+			head = nodo;
+		tail = nodo;
+	}
+	
 	public void print() {
 		Nodo<T> elem = head;
 		do {
