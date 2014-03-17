@@ -1,8 +1,11 @@
 package com.senac.view;
 
+import static java.lang.System.out;
+
 import java.util.Scanner;
 
 import com.senac.estruturas.ListaDuplamenteEncadeada;
+import com.senac.estruturas.Nodo;
 import com.senac.modelos.Contato;
 
 public class MenuPrincipal {
@@ -31,7 +34,11 @@ public class MenuPrincipal {
 				System.out.println("Agenda fechada");
 				break;
 			case 1:
-				agenda.print();
+				Nodo<Contato> contato = agenda.head;
+				do {
+					out.println(contato.getData().getNome());
+					contato = contato.getNext();
+				} while (contato != null);	
 				break;
 			case 2:
 				MenuAdicionar.adicionarContato();

@@ -3,8 +3,8 @@ package com.senac.estruturas;
 import static java.lang.System.out;
 
 public class ListaDuplamenteEncadeada<T> {
-	protected Nodo<T> head;
-	protected Nodo<T> tail;
+	public Nodo<T> head;
+	public Nodo<T> tail;
 	
 	public ListaDuplamenteEncadeada() {
 		head = null;

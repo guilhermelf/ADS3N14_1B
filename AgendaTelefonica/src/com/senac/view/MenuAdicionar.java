@@ -2,6 +2,7 @@ package com.senac.view;
 
 import java.util.Scanner;
 
+import com.senac.aplicacao.ManipularArquivo;
 import com.senac.estruturas.ListaDuplamenteEncadeada;
 import com.senac.estruturas.Nodo;
 import com.senac.modelos.Contato;
@@ -23,7 +24,6 @@ public class MenuAdicionar {
 		Boolean validador = false;
 		
 		System.out.printf("ADICIONAR CONTATO\nDigite o nome do Contato: ");
-		leitor.next();
 		nome = leitor.nextLine();
 		
 		while(!validador) {
@@ -55,7 +55,7 @@ public class MenuAdicionar {
 	
 	public static void confirmar() {
 		do {
-			System.out.printf("1 - Confirmar\n2 - Cancelar e voltar ao menu principal\nDigite a opção desejada: ");
+			System.out.printf("\n1 - Confirmar e salvar\n2 - Cancelar e voltar ao menu principal\nDigite a opção desejada: ");
 			try {
 				op = leitor.nextInt();
 			} catch (Exception e) {
@@ -70,7 +70,9 @@ public class MenuAdicionar {
 				break;
 			case 1:
 				Contato contato = new Contato(nome, ddd, telefone);
-				agenda.insert(new Nodo<Contato>(contato));
+				agenda.append(new Nodo<Contato>(contato));
+				
+				ManipularArquivo.salvar(contato);
 				
 				System.out.printf("\nContato adicionado com sucesso!\n");
 				
