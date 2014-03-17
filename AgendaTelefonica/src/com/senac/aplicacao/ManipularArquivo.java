@@ -27,12 +27,15 @@ public class ManipularArquivo {
 			  bw.newLine();
 			  bw.write(contato.getTelefone().toString());
 			  bw.flush(); 
+			  
+			  bw.close();
+			  fw.close();
+			  
+			  return true;
 		}catch(IOException ex){
-			ex.printStackTrace();
-		}
-	
-		
-		return true;
+			System.out.println("Erro ao salvar no arquivo");
+			return false;
+		}		
 	}
 	
 	
