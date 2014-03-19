@@ -2,9 +2,8 @@ package com.senac.estruturas;
 
 public class Nodo<T> {
 	
-	private T  dado;
-	private Nodo<T> next;
-	
+	private T dado;
+	private Nodo<T> next;	
 	private Nodo<T> prev;
 
 	public Nodo(T dado)	{
