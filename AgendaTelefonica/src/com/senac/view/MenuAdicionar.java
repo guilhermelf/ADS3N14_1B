@@ -4,17 +4,19 @@ import java.util.Scanner;
 
 import com.senac.aplicacao.ManipularArquivo;
 import com.senac.estruturas.ListaDuplamenteEncadeada;
-import com.senac.estruturas.Nodo;
+import com.senac.estruturas.ListaOrdenada;
 import com.senac.modelos.Contato;
 
 public class MenuAdicionar {
-	private static Scanner leitor = new Scanner(System.in);
+
 	private static Integer op = null;
 	private static String nome = null;
-	private static Integer ddd = null;
 	private static Integer telefone = null;
 	
 	public static ListaDuplamenteEncadeada<Contato> agenda;
+	public static ListaOrdenada<Contato> agendaOrdenada;
+	
+	private static Scanner leitor = new Scanner(System.in);
 	
 	public static void menu() {
 		
@@ -25,42 +27,27 @@ public class MenuAdicionar {
 		
 		System.out.printf("ADICIONAR CONTATO\nDigite o nome do Contato: ");
 		nome = leitor.nextLine();
-		
-		while(!validador) {
-			try {
-				System.out.printf("Digite o ddd do telefone: ");
-				ddd = leitor.nextInt();
-				validador = true;
-			} catch (Exception e) {
-				System.out.print("DDD inválido tente novamente.\n");
-				leitor.next();
-			}
-		}
-		
-		validador = false;
-		
+			
 		while(!validador) {
 		
 			System.out.printf("Digite o telefone: ");
 			try {
-				telefone = leitor.nextInt();
+				telefone = Integer.parseInt(leitor.nextLine());
 				validador = true;
 			} catch (Exception e) {
 				System.out.print("Telefone inválido (digite somente números).\n");
-				leitor.next();
 			}
 		}
 		confirmar();
 	}		
 	
 	public static void confirmar() {
-		do {
+		do {	
 			System.out.printf("\n1 - Confirmar e salvar\n2 - Cancelar e voltar ao menu principal\nDigite a opção desejada: ");
 			try {
-				op = leitor.nextInt();
+				op = Integer.parseInt(leitor.nextLine());
 			} catch (Exception e) {
 				System.out.printf("Opção inválida!\n");
-				leitor.next();
 				confirmar();
 			}
 			
@@ -69,11 +56,11 @@ public class MenuAdicionar {
 				System.out.println("Agenda fechada");
 				break;
 			case 1:
-				Contato contato = new Contato(nome, ddd, telefone);
-				agenda.append(new Nodo<Contato>(contato));
+				Contato contato = new Contato(nome, telefone);
+				agenda.insert(contato);
+				agendaOrdenada.insert(contato);
 				
-				ManipularArquivo.salvar(contato);
-				
+				ManipularArquivo.salvar(contato);			
 				System.out.printf("\nContato adicionado com sucesso!\n");
 				
 				op = 0;
