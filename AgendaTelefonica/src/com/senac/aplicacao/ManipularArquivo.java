@@ -9,10 +9,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import com.senac.estruturas.ListaDuplamenteEncadeada;
-import com.senac.estruturas.Nodo;
+import com.senac.estruturas.ListaOrdenada;
 import com.senac.modelos.Contato;
 
 public class ManipularArquivo {
+	private static String nome;
+	private static Integer telefone;
 	
 	public static Boolean salvar(Contato contato) {
 		File arquivo = new File("agenda.txt");
@@ -21,11 +23,9 @@ public class ManipularArquivo {
 			  BufferedWriter bw = new BufferedWriter(fw);            
 			 
 			  bw.write(contato.getNome());
-			  System.out.println(contato.getNome());
-			  bw.newLine();
-			  bw.write(contato.getDdd().toString());
 			  bw.newLine();
 			  bw.write(contato.getTelefone().toString());
+			  bw.newLine();
 			  bw.flush(); 
 			  
 			  bw.close();
@@ -52,8 +52,7 @@ public class ManipularArquivo {
 			return new ListaDuplamenteEncadeada<Contato>();
 		} else {
 			File arquivo = new File("agenda.txt");
-			ListaDuplamenteEncadeada<Contato> agenda = new ListaDuplamenteEncadeada<Contato>();
-			
+					
 			FileReader fr = null;
 			
 			try {
@@ -62,26 +61,23 @@ public class ManipularArquivo {
 				System.out.println("Não foi possível criar o arquivo!");
 			}
 			
+			ListaDuplamenteEncadeada<Contato> agenda = new ListaDuplamenteEncadeada<Contato>();
+			
 			BufferedReader br = new BufferedReader(fr);
 			
 			String linha = null;
-			Contato contato = new Contato();
 			
 			int i = 1;
 			try {
 				while((linha = br.readLine()) != null) {
 					switch (i) {
 					case 1:
-						contato.setNome(linha);
+						nome = linha;
 						i = 2;
 						break;
 					case 2:
-						contato.setDdd(Integer.parseInt(linha));
-						i = 3;
-						break;	
-					case 3:
-						contato.setTelefone(Integer.parseInt(linha));
-						agenda.insert(new Nodo<Contato>(contato));
+						telefone = Integer.parseInt(linha);
+						agenda.insert(new Contato(nome, telefone));
 						i = 1;
 						break;
 					default:
@@ -102,6 +98,7 @@ public class ManipularArquivo {
 			
 			return agenda;
 		}
-
 	}
+	
+	
 }
