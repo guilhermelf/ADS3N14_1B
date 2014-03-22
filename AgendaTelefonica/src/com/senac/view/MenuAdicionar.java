@@ -57,8 +57,13 @@ public class MenuAdicionar {
 				break;
 			case 1:
 				Contato contato = new Contato(nome, telefone);
-				agenda.insert(contato);
-				agendaOrdenada.insert(contato);
+				try {
+					agenda.append(contato);
+					agendaOrdenada.insert(contato);
+				} catch (Exception e) {
+					System.out.println("aki");
+				}
+				
 				
 				ManipularArquivo.salvar(contato);			
 				System.out.printf("\nContato adicionado com sucesso!\n");
