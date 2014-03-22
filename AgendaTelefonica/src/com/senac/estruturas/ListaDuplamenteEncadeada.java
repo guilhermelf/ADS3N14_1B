@@ -1,25 +1,12 @@
 package com.senac.estruturas;
 
-import static java.lang.System.out;
-import com.senac.modelos.Contato;
-
-public class ListaDuplamenteEncadeada<T extends Comparable<T>> {
-	protected Nodo<T> head;
-	protected Nodo<T> tail;
+public class ListaDuplamenteEncadeada<T extends Comparable<T>> extends ListaEncadeada<T>{
 	
 	public ListaDuplamenteEncadeada() {
 		head = null;
 		tail = null;
 	}
 	
-	public Nodo<T> getFirst() {
-		return head;
-	}
-	
-	public Nodo<T> getLast() {
-		return tail;
-	}
-
 	public void insert(T dado) {
 		Nodo<T> nodo = new Nodo<T>(dado);
 		
@@ -33,6 +20,37 @@ public class ListaDuplamenteEncadeada<T extends Comparable<T>> {
 		
 		if(tail == null)
 			tail = nodo;
+	}
+	
+	public Boolean excluir(T dado) {
+		Nodo<T> nodo = head;
+		Boolean excluiu = false;
+		
+		do {
+			if(dado == nodo.getData()) {	
+				if (nodo.getPrev() != null) {
+					nodo.getPrev().setNext(nodo.getNext());
+				} else {
+					head = nodo.getNext();
+					nodo.getNext().setPrev(null);
+				}
+				
+				if(nodo.getNext() != null) {
+					nodo.getNext().setPrev(nodo.getPrev());
+				} else {
+					tail = nodo.getPrev();
+					nodo.getPrev().setNext(null); 
+				}
+				
+				nodo = null;
+				
+				excluiu = true;
+			} else
+				nodo = nodo.getNext();
+
+		} while(nodo != null);
+		
+		return excluiu;
 	}
 	
 	public void insert(T dado, Nodo<T> anterior) {
@@ -55,7 +73,7 @@ public class ListaDuplamenteEncadeada<T extends Comparable<T>> {
 			tail = nodo;
 		}
 	}
-		
+	
 	public void append(T dado) {
 		Nodo<T> nodo = new Nodo<T>(dado);
 		
@@ -66,22 +84,5 @@ public class ListaDuplamenteEncadeada<T extends Comparable<T>> {
 			nodo.setPrev(tail);
 		}	
 		tail = nodo;
-	}
-	
-	public void print() {
-		Nodo<T> elem = head;
-		do {
-			out.println(elem.getData());
-			elem = elem.getNext();
-		} while (elem != null);		
-	}
-	
-	public void printContato() {
-		Nodo<Contato> nodo = (Nodo<Contato>) head;
-		do {						
-			out.printf("Nome: %s\nTelefone: %d\n\n", nodo.getData().getNome(), nodo.getData().getTelefone());		
-			
-			nodo = nodo.getNext();
-		} while (nodo != null);				
 	}
 }

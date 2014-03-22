@@ -1,27 +1,25 @@
 package com.senac.estruturas;
 
-import static java.lang.System.out;
+public class ListaOrdenada<T extends Comparable<T>> extends ListaEncadeada<T> {
 
-import com.senac.modelos.Contato;
-
-public class ListaOrdenada<T extends Comparable<T>> {
-	protected Nodo<T> head;
-	protected Nodo<T> tail;
 	
 	public ListaOrdenada() {
 		this.head = null;
 		this.tail = null;
 	}
 	
-	public Nodo<T> getFirst() {
-		return head;
+	@Override
+	public void insert(T dado, Nodo<T> anterior) {
+		insert(dado);
 	}
-	
-	public Nodo<T> getLast() {
-		return tail;
+
+	@Override
+	public void append(T dado) {
+		insert(dado);
 	}
-	
- 	public void insert(T dado) {
+
+	@Override
+	public void insert(T dado) {
 		Nodo<T> nodo = new Nodo<T>(dado);
 		Nodo<T> percorrer = null;
 		Nodo<T> anterior = head;
@@ -63,33 +61,11 @@ public class ListaOrdenada<T extends Comparable<T>> {
 						anterior = null;
 					} else
 						anterior = anterior.getNext();
-				}
-			
-				
-				
+				}		
 			} else {
 					head = nodo;
 					tail = nodo;
-			}
-			
+			}		
 		} while (anterior != null);
 	}
-
-	public void print() {
-		Nodo<T> elem = head;
-		do {
-			out.println(elem.getData());
-			elem = elem.getNext();
-		} while (elem != null);		
-	}
-	
-	public void printContato() {
-		Nodo<Contato> nodo = (Nodo<Contato>) head;
-		do {						
-			out.printf("Nome: %s\nTelefone: %d\n\n", nodo.getData().getNome(), nodo.getData().getTelefone());		
-			
-			nodo = nodo.getNext();
-		} while (nodo != null);				
-	}
-	
 }
