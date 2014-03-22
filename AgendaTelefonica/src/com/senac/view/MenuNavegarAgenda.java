@@ -4,21 +4,15 @@ import static java.lang.System.out;
 
 import java.util.Scanner;
 
-import com.senac.estruturas.ListaDuplamenteEncadeada;
+import com.senac.estruturas.ContatoIterator;
 import com.senac.estruturas.ListaOrdenada;
-import com.senac.estruturas.Nodo;
 import com.senac.modelos.Contato;
 
 public class MenuNavegarAgenda {
-	public static Scanner leitor = new Scanner(System.in);
+	public static final Scanner leitor = new Scanner(System.in);
 	static int op = 0;
 	
-	public static ListaDuplamenteEncadeada<Contato> agenda;
-	public static ListaOrdenada<Contato> agendaOrdenada;
-	
-	public MenuNavegarAgenda() {
-		
-	}
+	public static ListaOrdenada<Contato> agendaOrdenada;	
 	
 	public static void menu() {
 				
@@ -39,11 +33,23 @@ public class MenuNavegarAgenda {
 				op = 0;
 				break;
 			case 1:
-				MenuNavegarContatos.mostrarContato();
+				MenuNavegarContatos.mostrarContato(false);
 				break;
 			case 2:
 				out.printf("\nLISTANDO TODOS OS CONTATOS\n");
-				agendaOrdenada.printContato();
+				
+				ContatoIterator it = new ContatoIterator(agendaOrdenada);
+				
+				if(it.getData() != null) {
+					Contato contato;
+					do {		
+						contato = it.getData();
+						out.printf("Nome: %s%nTelefone: %d%n", contato.getNome(), contato.getTelefone());
+					} while(it.next() != false);
+				}
+				break;
+			case 3:
+				MenuNavegarContatos.mostrarContato(true);
 				break;
 			default:
 				System.out.printf("Opção inválida!%n");

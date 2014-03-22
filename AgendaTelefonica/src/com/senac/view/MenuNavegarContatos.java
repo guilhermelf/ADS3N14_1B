@@ -1,29 +1,40 @@
 package com.senac.view;
 
 import static java.lang.System.out;
-
 import java.util.Scanner;
 
+import com.senac.aplicacao.ManipularArquivo;
+import com.senac.estruturas.ContatoIterator;
 import com.senac.estruturas.ListaDuplamenteEncadeada;
+import com.senac.estruturas.ListaDuplamenteEncadeadaContatos;
 import com.senac.estruturas.ListaOrdenada;
-import com.senac.estruturas.Nodo;
 import com.senac.modelos.Contato;
 
 public class MenuNavegarContatos {
 	static Integer op = 0;
-	public static Scanner leitor = new Scanner(System.in);
+	public static final Scanner leitor = new Scanner(System.in);
 	
 	public static ListaDuplamenteEncadeada<Contato> agenda;
 	public static ListaOrdenada<Contato> agendaOrdenada;
 	
-	public static void mostrarContato() {
-		System.out.println("NAVEGANDO PELA AGENDA");
+	public static void mostrarContato(Boolean pesquisar) {
+		System.out.println("NAVEGANDO PELA AGENDA\n");
+		ContatoIterator it = null;
+		if(!pesquisar) {
+			it = new ContatoIterator(agendaOrdenada);
+		} else {
+			System.out.printf("Digite o nome do contato: ");
+			String nome = leitor.nextLine();
+			
+			it = ListaDuplamenteEncadeadaContatos.getByName(nome, agendaOrdenada);
 		
-		Nodo<Contato> nodo = agendaOrdenada.getFirst();
-		if(nodo != null) {
+		}
+		if(it != null && it.hasNext() != false) {
+			Contato contato = it.getData();
 			do {
-				out.printf("Nome: %s\nTelefone: %d\n", nodo.getData().getNome(), nodo.getData().getTelefone());
-				out.printf("1 - Voltar ao contato anterior\n2 - Avançar ao próximo contato\n0 - Sair da exibicao de contatos\nDigite a opção escolhida: ");
+				out.printf("Nome: %s%nTelefone: %d%n", contato.getNome(), contato.getTelefone());
+
+				out.printf("\n1 - Voltar ao contato anterior\n2 - Avançar ao próximo contato\n3 - Excluir contato\n0 - Sair da exibicao de contatos\nDigite a opção escolhida: ");
 				try {
 					op = Integer.parseInt(leitor.nextLine());
 				} catch (Exception e) {
@@ -31,16 +42,26 @@ public class MenuNavegarContatos {
 				}
 				switch (op) {
 				case 1:
-					if(nodo.getPrev() != null) 
-						nodo = nodo.getPrev();
-					else 
+					if(it.hasPrev() != false)  {
+						it.prev();
+						contato = it.getData();
+					} else 
 						System.out.println("Não há contato anterior.");
 					break;
 				case 2:
-					if(nodo.getNext() != null) 
-						nodo = nodo.getNext();
-					else
+					if(it.hasNext() != false) {
+						it.next();
+						contato = it.getData();
+					} else
 						System.out.println("Não há um próximo contato.");
+					break;
+				case 3:
+					
+					agenda.excluir(it.getData());
+					ManipularArquivo.atualizar();
+					System.out.println("Contato excluido com sucesso!");
+					op = 0;
+					
 					break;
 				case 0:	
 					break;
@@ -50,7 +71,7 @@ public class MenuNavegarContatos {
 				
 			} while (op != 0);
 		} else {
-			System.out.println("Não há elementos na lista!");
+			System.out.println("Contato não localizado!");
 		}
 	}
 }
