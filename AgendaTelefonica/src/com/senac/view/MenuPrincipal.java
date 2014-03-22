@@ -7,7 +7,7 @@ import com.senac.estruturas.ListaOrdenada;
 import com.senac.modelos.Contato;
 
 public class MenuPrincipal {
-	public static Scanner leitor = new Scanner(System.in);
+	public static final Scanner leitor = new Scanner(System.in);
 	static int op = 0;
 	
 	public static ListaDuplamenteEncadeada<Contato> agenda;
