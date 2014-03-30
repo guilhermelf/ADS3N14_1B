@@ -14,9 +14,9 @@ public class Principal {
 	public static void carregar() {
 		
 		ManipularArquivo.carregar();	
+		
 		agenda = ManipularArquivo.agenda;
 		agendaOrdenada = ManipularArquivo.agendaOrd;
-
 		
 		MenuAdicionar.agenda = agenda;
 		MenuAdicionar.agendaOrdenada = agendaOrdenada;
