@@ -1,0 +1,1 @@
+Comparando as inserções nas duas árvores, notamos que com elementos em ordem randômica, a árvore Red-Black leva vantagem, tanto em comparações quanto em rotações, já ao inserirmos em ordenadamente (1-50), notamos que a AVL apesar de fazer mais rotações, acaba fazendo menos comparações.
